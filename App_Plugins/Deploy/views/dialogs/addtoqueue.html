@@ -1,0 +1,42 @@
+<div class="umb-dialog" ng-controller="UmbracoDeploy.AddToQueueDialogController as addToQueueVm">
+    <div class="umb-pane" ng-cloak>
+        <div class="deployModal unstyled" ng-if="addToQueueVm.addedToQueue == false">
+
+            <localize key="dialogs_deployAddToQueueDescription" tokens="[addToQueueVm.item.name, addToQueueVm.deployConfiguration.Target.Name]"></localize>
+
+            <div ng-if="addToQueueVm.withBranch" class="mb4">
+                <hr/>
+                <localize key="dialogs_deployAddToQueueChildPageDescription" tokens="[addToQueueVm.item.name, addToQueueVm.deployConfiguration.Target.Name]"></localize>
+
+                <umb-checkbox
+                    value="addToQueueVm.includeDescendants"
+                    model="addToQueueVm.includeDescendants"
+                    name="includeDescendants"
+                    text="{{addToQueueVm.labels.deployIncludeChildPages}}">
+                </umb-checkbox>
+            </div>
+            <umb-button
+                type="button"
+                button-style="success"
+                action="addToQueueVm.addToQueue(addToQueueVm.item)"
+                label="Queue">
+            </umb-button>
+        </div>
+        <div ng-if="addToQueueVm.addedToQueue">
+
+            <localize key="dialogs_deployAddToQueueDone" tokens="[addToQueueVm.item.name, addToQueueVm.deployConfiguration.Target.Name]"></localize>
+
+            <umb-button
+                type="button"
+                action="addToQueueVm.openTransferQueue()"
+                label-key="sections_deployOpenQueue">
+            </umb-button>
+            <umb-button
+                type="button"
+                button-style="success"
+                action="addToQueueVm.closeDialog()"
+                label-key="close">
+            </umb-button>
+        </div>
+    </div>
+</div>

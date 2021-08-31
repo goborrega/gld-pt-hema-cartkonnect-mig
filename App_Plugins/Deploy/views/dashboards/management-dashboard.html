@@ -1,0 +1,76 @@
+<div id="deployManagementDashboard" ng-controller="UmbracoDeploy.ManagementDashboardController as vm">
+
+    <div ng-if="vm.isLicensed">
+
+        <umb-load-indicator ng-show="vm.loading"></umb-load-indicator>
+
+        <div class="umb-panel-group__details-group">
+            <div class="umb-panel-group__details-group-title">
+                <div class="umb-panel-group__details-group-name">
+                    <localize key="deployManagementDashboard_deployStatus">Deploy Status</localize>
+                </div>
+            </div>
+            <div class="umb-panel-group__details-checks">
+                <div class="umb-panel-group__details-check">
+                    <div class="umb-panel-group__details-status">
+                        <div class="umb-panel-group__details-status-content">
+                            <table class="status-display" !vm.loading && vm.dashboard">
+                                <tr>
+                                    <th><localize key="deployManagementDashboard_version">Version</localize>: </th>
+                                    <td>{{vm.dashboard.version}}</td>
+                                </tr>
+                                <tr>
+                                    <th><localize key="deployManagementDashboard_status">Status</localize>: </th>
+                                    <td>{{vm.dashboard.status.message}}</td>
+                                </tr>
+                                <tr ng-show="vm.dashboard.status.formattedDateTime">
+                                    <th><localize key="deployManagementDashboard_operationTime">Operation time</localize>: </th>
+                                    <td>{{vm.dashboard.status.formattedDateTime}}</td>
+                                </tr>
+                            </table>
+                            <div>
+                                <div>
+                                    <button type="button" ng-click="vm.refresh(true)" class="btn btn-success">
+                                        <localize key="deployManagementDashboard_refreshStatus">Refresh status</localize>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="umb-panel-group__details-group">
+            <div class="umb-panel-group__details-group-title">
+                <div class="umb-panel-group__details-group-name">
+                    <localize key="deployManagementDashboard_deployOperations">Deploy Operations</localize>
+                </div>
+            </div>
+            <div class="umb-panel-group__details-checks">
+                <div class="umb-panel-group__details-check">
+                    <div class="umb-panel-group__details-status">
+                        <div class="umb-panel-group__details-status-content">
+                            <select ng-model="vm.selectedOperation" ng-options="key as value for (key, value) in vm.operations" no-dirty-check></select>
+                            <button type="button" ng-click="vm.triggerOperation()" class="btn btn-danger">
+                                <localize key="deployManagementDashboard_triggerOperation">Trigger Operation</localize>
+                            </button>
+                            <p class="operation-message">{{vm.operationMessage}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <umb-box ng-if="!vm.isLicensed">
+        <umb-box-content>
+            <div>
+                Umbraco Deploy is not licensed.
+            </div>
+        </umb-box-content>
+    </umb-box>
+
+</div>
